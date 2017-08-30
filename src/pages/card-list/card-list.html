@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Card List</ion-title>
+  </ion-navbar>
+
+  <ion-searchbar 
+    [(ngModel)]="myInput"
+    (ionInput)="getItems($event)"
+    (ionClear)="onClear($event)">
+  </ion-searchbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let item of items" (click)="cardTapped($event, item)">
+      <img src="{{item.img}}"/>
+      <ion-card-content>
+        <ion-card-title>
+          {{item.title}}
+        </ion-card-title>
+        <ion-icon name="ios-clock-outline"></ion-icon> {{item.date}}
+        <p>
+          {{item.note}}
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

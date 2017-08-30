@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Pet Form</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class='no-scroll'>
+
+<!-- <ion-img id="camera-image" [width]="imgWidth" [height]="imgHeight"></ion-img> -->
+<img id="camera-image" />
+<p id="test-post"></p>
+<p id="test-image"></p>
+
+<form [formGroup]="petInfo" (ngSubmit)="petForm()">
+  <ion-item>
+    <ion-label color="primary" floating>標題</ion-label>
+    <ion-input type="text" formControlName="title"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>描述</ion-label>
+    <ion-textarea formControlName="description"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>性別</ion-label>
+    <!-- <ion-select [(ngModel)]="gender"> -->
+    <ion-select interface="popover" formControlName="gender">
+      <ion-option value="FEMALE">Female</ion-option>
+      <ion-option value="NALE">Male</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>歲數</ion-label>
+    <ion-input type="number" formControlName="age"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>聯絡電話</ion-label>
+    <ion-input type="number" formControlName="contactNum"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" floating>其他聯絡方式</ion-label>
+    <ion-input type="text" formControlName="otherContact"></ion-input>
+  </ion-item>
+  
+  <div padding>
+    <button ion-button block type="submit" [disabled]="!petInfo.valid">提交</button>
+  </div>
+</form>
+
+<ion-fab right bottom>
+  <button ion-fab color="secondary"><ion-icon name="add"></ion-icon></button>
+  <ion-fab-list side="top">
+    <button ion-fab (click)="getPicture()"><ion-icon name="md-camera"></ion-icon></button>
+    <button ion-fab><ion-icon name="md-images"></ion-icon></button>
+  </ion-fab-list>
+</ion-fab>
+
+</ion-content>

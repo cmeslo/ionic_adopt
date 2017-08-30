@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!selectedCard">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Card Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <img src="{{selectedCard.img}}"/>
+  <p>{{selectedCard.title}}</p>
+  <ion-icon name="ios-clock-outline"></ion-icon> {{selectedCard.date}}
+  <p>{{selectedCard.note}}</p>
+</ion-content>
