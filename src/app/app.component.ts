@@ -6,6 +6,7 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
 import { CardListPage } from '../pages/card-list/card-list';
 import { PetFormPage } from '../pages/pet-form/pet-form';
+import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,8 +21,9 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage = HelloIonicPage;
-  pages: Array<{title: string, component: any}>;
+  // rootPage = HelloIonicPage;
+  // pages: Array<{title: string, component: any}>;
+  rootPage:any = TabsPage;
 
   constructor(
     public platform: Platform,
@@ -33,12 +35,12 @@ export class MyApp {
     this.initializeApp();
 
     // set our app's pages
-    this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage },
-      { title: 'Card List', component: CardListPage },
-      { title: 'Pet Form', component: PetFormPage }
-    ];
+    // this.pages = [
+    //   { title: 'Hello Ionic', component: HelloIonicPage },
+    //   { title: 'My First List', component: ListPage },
+    //   { title: 'Card List', component: CardListPage },
+    //   { title: 'Pet Form', component: PetFormPage }
+    // ];
   }
 
   initializeApp() {
@@ -47,14 +49,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
-      /*
-       * Disable the Ionic Keyboard Plugin scroll for iOS only
-       */
-
-      if (this.platform.is('ios')) {
-        this.keyboard.disableScroll(true);
-      }
 
     });
   }

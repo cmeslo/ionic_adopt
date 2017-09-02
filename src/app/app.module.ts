@@ -9,6 +9,8 @@ import { ListPage } from '../pages/list/list';
 import { CardListPage } from '../pages/card-list/card-list';
 import { CardDetailsPage } from '../pages/card-details/card-details';
 import { PetFormPage } from '../pages/pet-form/pet-form';
+import { TabsPage } from '../pages/tabs/tabs';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,7 +27,8 @@ import { HttpModule } from '@angular/http';
     ListPage,
     CardListPage,
     CardDetailsPage,
-    PetFormPage
+    PetFormPage,
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { HttpModule } from '@angular/http';
     ListPage,
     CardListPage,
     CardDetailsPage,
-    PetFormPage
+    PetFormPage,
+    TabsPage
   ],
   providers: [
     StatusBar,
