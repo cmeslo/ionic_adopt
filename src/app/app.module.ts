@@ -11,11 +11,11 @@ import { CardDetailsPage } from '../pages/card-details/card-details';
 import { PetFormPage } from '../pages/pet-form/pet-form';
 import { TabsPage } from '../pages/tabs/tabs';
 
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
 import { Transfer } from '@ionic-native/transfer';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 import { HttpModule } from '@angular/http';
 
@@ -56,6 +56,7 @@ import { HttpModule } from '@angular/http';
     SplashScreen,
     Camera,
     Transfer,
+    ImagePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

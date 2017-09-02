@@ -10,7 +10,7 @@
 <ion-content padding class='no-scroll'>
 
 <!-- <ion-img id="camera-image" [width]="imgWidth" [height]="imgHeight"></ion-img> -->
-<img id="camera-image" />
+<img id="imagePreview" />
 <p id="test-post"></p>
 <p id="test-image"></p>
 
@@ -53,7 +53,7 @@
   <button ion-fab color="secondary"><ion-icon name="add"></ion-icon></button>
   <ion-fab-list side="top">
     <button ion-fab (click)="getPicture()"><ion-icon name="md-camera"></ion-icon></button>
-    <button ion-fab><ion-icon name="md-images"></ion-icon></button>
+    <button ion-fab (click)="choosePicture()"><ion-icon name="md-images"></ion-icon></button>
   </ion-fab-list>
 </ion-fab>
 

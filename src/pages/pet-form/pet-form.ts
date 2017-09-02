@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
+import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker';
 
 @Component({
   selector: 'page-pet-form',
@@ -12,11 +13,14 @@ import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/trans
 })
 
 export class PetFormPage implements AfterViewInit {
+
   public base64Image: string;
-  private petInfo : FormGroup;
+  private petInfo: FormGroup;
   @ViewChild(Content) content: Content;
 
-  constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer) {
+  private imagePreview: any;
+
+  constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer, private imagePicker: ImagePicker) {
     this.petInfo = this.formBuilder.group({
       title: ['', Validators.required],
       gender: [''],
@@ -30,6 +34,7 @@ export class PetFormPage implements AfterViewInit {
   ngAfterViewInit() {
     console.log(this.content);
     //this.content.className = 'no-scroll';
+    this.imagePreview = document.getElementById('imagePreview');
   }
 
   petForm() {
@@ -109,10 +114,26 @@ export class PetFormPage implements AfterViewInit {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
       this.base64Image = "data:image/jpeg;base64," + imageData;
-      let cameraImageSelector = document.getElementById('camera-image');
-      cameraImageSelector.setAttribute('src', this.base64Image);
+      this.imagePreview.setAttribute('src', this.base64Image);
     }, (err) => {
       // Handle error
+      console.log(err);
+    });
+  }
+
+  choosePicture() {
+    const options: ImagePickerOptions = {
+      maximumImagesCount: 1
+    }
+    this.imagePicker.getPictures(options).then((results) => {
+      for (var i = 0; i < results.length; i++) {
+        console.log('Image URI: ' + results[i]);
+        document.getElementById("test-image").innerHTML = results[i];
+        //this.imagePreview.setAttribute('src', results[i]);
+        this.imagePreview.src = results[i];
+        //this.imagePreview.style="max-width:200px"
+      }
+    }, (err) => {
       console.log(err);
     });
   }
