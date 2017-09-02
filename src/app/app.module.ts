@@ -13,7 +13,7 @@ import { PetFormPage } from '../pages/pet-form/pet-form';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
-import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
+import { Transfer } from '@ionic-native/transfer';
 
 import { HttpModule } from '@angular/http';
 

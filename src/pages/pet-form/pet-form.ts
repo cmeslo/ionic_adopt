@@ -53,6 +53,7 @@ export class PetFormPage implements AfterViewInit {
       // operatTime: this.getCurrentTime(),
 
       status: null,
+      operator: 'test'
       // loveSet: null,
       // commentList: null,
       // dislike: 1,
@@ -84,7 +85,7 @@ export class PetFormPage implements AfterViewInit {
             let imageName = data;
             this.uploadImage(imageName);
           } else {
-            alert('image is null');
+            alert('post successfully, but image is null');
           }
         }, error => {
           let test = document.getElementById('test-post');
@@ -95,7 +96,7 @@ export class PetFormPage implements AfterViewInit {
 
   getPicture() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       allowEdit: true,
       saveToPhotoAlbum: false,
       correctOrientation: true,
@@ -107,7 +108,7 @@ export class PetFormPage implements AfterViewInit {
   	this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
-      this.base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.base64Image = "data:image/jpeg;base64," + imageData;
       let cameraImageSelector = document.getElementById('camera-image');
       cameraImageSelector.setAttribute('src', this.base64Image);
     }, (err) => {
@@ -134,12 +135,13 @@ export class PetFormPage implements AfterViewInit {
         chunkedMode: false,
         fileKey: 'file',
         fileName: name + '.jpg',
-        headers: {Connection: "close"},
+        mimeType: 'image/jpeg',
+        //headers: {Connection: "close"},
         params:{operatiune:'uploadpoza'}
       };
     let url = 'http://adoptmacao.ddnsking.com:8080/Adopt/sayhello/fileupload';
 
-    fileTransfer.upload(this.base64Image, url, options)
+    fileTransfer.upload(this.base64Image, encodeURI(url), options)
       .then((data) => {
         let test = document.getElementById('test-image');
         test.innerHTML = 'image upload success: ' + JSON.stringify(data);
@@ -147,7 +149,7 @@ export class PetFormPage implements AfterViewInit {
       }, (err) => {
         let test = document.getElementById('test-image');
         test.innerHTML = 'image upload error: ' + JSON.stringify(err);
-        alert("error"+JSON.stringify(err)+"!");
+        alert("error");
       });
   }
 
