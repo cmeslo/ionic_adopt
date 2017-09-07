@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <button menuToggle *ngIf="!selectedCard">
+    <button menuToggle *ngIf="!item">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Card Details</ion-title>
@@ -8,8 +8,23 @@
 </ion-header>
 
 <ion-content>
-  <img src="{{selectedCard.img}}"/>
-  <p>{{selectedCard.title}}</p>
-  <ion-icon name="ios-clock-outline"></ion-icon> {{selectedCard.date}}
-  <p>{{selectedCard.note}}</p>
+  <img src="{{item.image}}"/>
+  <p>{{item.title}}</p>
+  <ion-icon name="ios-clock-outline"></ion-icon> {{item.operatTime}}
+  <p>描述: {{item.desc}}</p>
+  <p>性別: {{item.gender}}</p>
+  <p>年齡: {{item.age}}</p>
+  <p>聯絡電話: {{item.contactNumber}}</p>
+
+  <p>評論:</p>
+  <ion-list>
+    <ion-card *ngFor="let comment of item.commentList">
+      <ion-card-header>
+        {{comment.userId}}
+      </ion-card-header>
+      <ion-card-content>
+        {{comment.contenct}}
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>

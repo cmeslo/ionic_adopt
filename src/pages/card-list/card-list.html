@@ -17,16 +17,34 @@
 <ion-content>
   <ion-list>
     <ion-card *ngFor="let item of items" (click)="cardTapped($event, item)">
-      <img src="{{item.img}}"/>
+      <img src="{{item.image}}"/>
       <ion-card-content>
         <ion-card-title>
           {{item.title}}
         </ion-card-title>
-        <ion-icon name="ios-clock-outline"></ion-icon> {{item.date}}
-        <p>
-          {{item.note}}
-        </p>
+        <ion-icon name="ios-clock-outline"></ion-icon> {{item.operatTime}}
+        <p>{{item.desc}}</p>
       </ion-card-content>
+      <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="secondary" icon-start>
+          <ion-icon name='md-thumbs-up'></ion-icon>
+          {{item.dislike}} like
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button clear small color="secondary" icon-start>
+          <ion-icon name='md-create'></ion-icon>
+          Comment
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button clear small color="secondary" icon-start>
+          <ion-icon name='share-alt'></ion-icon>
+          Share
+        </button>
+      </ion-col>
+    </ion-row>
     </ion-card>
   </ion-list>
   

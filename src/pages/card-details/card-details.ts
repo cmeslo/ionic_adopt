@@ -8,9 +8,9 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class CardDetailsPage {
 
-	selectedCard: any;
+	item: any;
 
 	constructor(public navParams: NavParams) {
-		this.selectedCard = navParams.get('item');
+		this.item = navParams.get('item');
 	}
 }
