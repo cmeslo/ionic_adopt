@@ -18,13 +18,23 @@
 
   <p>評論:</p>
   <ion-list>
-    <ion-card *ngFor="let comment of item.commentList">
-      <ion-card-header>
-        {{comment.userId}}
-      </ion-card-header>
-      <ion-card-content>
+    <ion-item *ngFor="let comment of item.commentList">
+      <ion-icon item-start name="contact"></ion-icon>
+      <h2>
         {{comment.contenct}}
-      </ion-card-content>
-    </ion-card>
+      </h2>
+      <p>
+        {{comment.userId}}
+      </p>
+    </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-input type="text" placeholder="留言......" clearInput></ion-input>
+      <button ion-button item-end outline color="primary">Send</button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>
