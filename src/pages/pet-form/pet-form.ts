@@ -5,7 +5,6 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
-import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker';
 
 @Component({
   selector: 'page-pet-form',
@@ -20,7 +19,7 @@ export class PetFormPage implements AfterViewInit {
 
   private imagePreview: any;
 
-  constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer, private imagePicker: ImagePicker) {
+  constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer) {
     this.petInfo = this.formBuilder.group({
       title: ['', Validators.required],
       gender: [''],
@@ -122,17 +121,20 @@ export class PetFormPage implements AfterViewInit {
   }
 
   choosePicture() {
-    const options: ImagePickerOptions = {
-      maximumImagesCount: 1
-    }
-    this.imagePicker.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-        console.log('Image URI: ' + results[i]);
-        document.getElementById("test-image").innerHTML = results[i];
-        //this.imagePreview.setAttribute('src', results[i]);
-        this.imagePreview.src = results[i];
-        //this.imagePreview.style="max-width:200px"
-      }
+    let options = {
+      quality: 50,
+      allowEdit: false,
+      correctOrientation: false,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
+      mediaType: this.camera.MediaType.PICTURE,
+    };
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is a base64 encoded string
+      this.base64Image = "data:image/jpeg;base64," + imageData;
+      this.imagePreview.setAttribute('src', this.base64Image);
+      //this.imagePreview.style="max-width:200px"
     }, (err) => {
       console.log(err);
     });
