@@ -1,4 +1,4 @@
-import { AfterViewInit, ViewChild, Component } from '@angular/core';
+import { AfterViewInit, ViewChild, Component, ElementRef } from '@angular/core';
 import { Content } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -16,6 +16,7 @@ export class PetFormPage implements AfterViewInit {
   public base64Image: string;
   private petInfo: FormGroup;
   @ViewChild(Content) content: Content;
+  @ViewChild('myInput') myInput: ElementRef;
 
   private imagePreview: any;
 
@@ -174,6 +175,13 @@ export class PetFormPage implements AfterViewInit {
         test.innerHTML = 'image upload error: ' + JSON.stringify(err);
         alert("error");
       });
+  }
+
+  resize() {
+    let ta = this.myInput['_elementRef'].nativeElement.querySelector("textarea");
+    ta.style.overflow = "hidden";
+    ta.style.height = "auto";
+    ta.style.height = ta.scrollHeight + "px";
   }
 
 }
