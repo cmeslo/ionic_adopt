@@ -7,6 +7,7 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import { CardListPage } from '../pages/card-list/card-list';
+import { PopoverPage } from '../pages/card-list/pop-over';
 import { CardDetailsPage } from '../pages/card-details/card-details';
 import { PetFormPage } from '../pages/pet-form/pet-form';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -25,6 +26,7 @@ import { HttpModule } from '@angular/http';
     ItemDetailsPage,
     ListPage,
     CardListPage,
+    PopoverPage,
     CardDetailsPage,
     PetFormPage,
     TabsPage
@@ -46,6 +48,7 @@ import { HttpModule } from '@angular/http';
     ItemDetailsPage,
     ListPage,
     CardListPage,
+    PopoverPage,
     CardDetailsPage,
     PetFormPage,
     TabsPage
