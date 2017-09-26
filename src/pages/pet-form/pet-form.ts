@@ -57,7 +57,7 @@ export class PetFormPage implements AfterViewInit {
       otherContact: this.petInfo.value.otherContact,
       // operatTime: this.getCurrentTime(),
 
-      status: null,
+      status: 'A',
       operator: 'test'
       // loveSet: null,
       // commentList: null,
@@ -75,7 +75,7 @@ export class PetFormPage implements AfterViewInit {
     }
     console.log('body: ' + JSON.stringify(body));
 
-    let url = 'http://adoptmacao.ddnsking.com:8080/Adopt/sayhello/addForm';
+    let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/addForm';
 
     let options = new RequestOptions({ headers: headers });
 
@@ -163,7 +163,7 @@ export class PetFormPage implements AfterViewInit {
         //headers: {Connection: "close"},
         params:{operatiune:'uploadpoza'}
       };
-    let url = 'http://adoptmacao.ddnsking.com:8080/Adopt/sayhello/fileupload';
+    let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/fileupload';
 
     fileTransfer.upload(this.base64Image, encodeURI(url), options)
       .then((data) => {
