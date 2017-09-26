@@ -1,30 +1,20 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
     <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button> -->
     <ion-buttons start>
-      <button ion-button clear (click)="postAdopt()">
+      <button ion-button clear icon-only (click)="postAdopt()">
         <ion-icon class="icon" name="add"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title center>Pets</ion-title>
+    <ion-title>Pets</ion-title>
     <ion-buttons end>
-      <button ion-button clear (click)="presentPopover($event)">
+      <button ion-button clear icon-only (click)="presentPopover($event)">
         <ion-icon class="icon" name="more"></ion-icon>
       </button>
     </ion-buttons>
-    <!-- <button ion-button right (click)="presentPopover($event)">
-      <ion-icon name="funnel"></ion-icon>
-    </button> -->
-  </ion-navbar>
-
-
-  <!-- <ion-select interface="popover" formControlName="petType">
-    <ion-icon right name="funnel" (click)="selectType($event, petType")></ion-icon>
-    <ion-option value="dog">狗</ion-option>
-    <ion-option value="cat">貓</ion-option>
-  </ion-select> -->
+  </ion-toolbar>
     
 <!--   <ion-searchbar 
     placeholder="Filter"

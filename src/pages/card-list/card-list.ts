@@ -73,7 +73,7 @@ export class CardListPage {
 
 	initializeItems() {
 		// this.http.get('http://127.0.0.1:8080/infoCard').map(res => res.json())
-		this.http.get('http://adoptmacao.ddnsking.com:8080/Adopt/sayhello/getAdopt/0').map(res => res.json())
+		this.http.get('http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/0').map(res => res.json())
 		.subscribe(data => {
 			for (var i = 0; i < data.length; ++i) {
 
@@ -112,7 +112,7 @@ export class CardListPage {
 
 		setTimeout(() => {
 				// this.http.get('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json())
-			this.http.get('http://adoptmacao.ddnsking.com:8080/Adopt/sayhello/getAdopt/' + global.currentId).map(res => res.json())
+			this.http.get('http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/' + global.currentId).map(res => res.json())
 			.subscribe(data => {
 				for (var i = 0; i < data.length; ++i) {
 					this.allItems.push(data[i]);

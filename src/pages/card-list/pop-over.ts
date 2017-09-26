@@ -9,7 +9,6 @@ import { ViewController, PopoverController } from 'ionic-angular';
         {{item.name}}
       </ion-item>
     </ion-list>
-    
   `
 })
 export class PopoverPage {
