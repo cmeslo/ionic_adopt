@@ -1,3 +1,3 @@
 export var global = {
-	currentId : 0
+	currentPage : 0
 };
