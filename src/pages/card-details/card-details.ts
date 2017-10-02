@@ -14,6 +14,12 @@ export class CardDetailsPage {
 
 	constructor(public navParams: NavParams, public http: Http, private toastCtrl: ToastController) {
 		this.item = navParams.get('item');
+		for (let comment of this.item.commentList) {
+      comment['avatar'] = null;
+		  if (comment.userId.length > 5) {
+		    comment['avatar'] = 'https://graph.facebook.com/' + comment.userId + '/picture';
+      }
+    }
 	}
 
 	comment() {
@@ -37,14 +43,23 @@ export class CardDetailsPage {
 			adopt: this.item.id,
 			content: this.commentText.value
 		}
+
+		let userId = '1306532112799708';
+    // let userId = window.localStorage.getItem('userid');
+    let avatar = null;
+    if (userId.length > 5) {
+      avatar = 'https://graph.facebook.com/' + userId + '/picture';
+    }
+
 		let commentInAdopt = {
-			userId: "001",
+			userId: "1306532112799708",
+      avatar: avatar,
 			content: this.commentText.value
 		}
 
-		this.http.post(url, body, options).map(res => res.json())
+		this.http.post(url, body, options)
 		.subscribe(data => {
-			console.log('success: ' + data);			
+			console.log('success: ' + data);
 		}, error => {
 			console.log('error: ' + error);
 		});

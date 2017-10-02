@@ -124,8 +124,8 @@ export class PetFormPage implements AfterViewInit {
   choosePicture() {
     let options = {
       quality: 50,
-      allowEdit: false,
-      correctOrientation: false,
+      allowEdit: true,
+      correctOrientation: true,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -169,7 +169,7 @@ export class PetFormPage implements AfterViewInit {
       .then((data) => {
         let test = document.getElementById('test-image');
         test.innerHTML = 'image upload success: ' + JSON.stringify(data);
-        alert("success");
+        alert("success 00");
       }, (err) => {
         let test = document.getElementById('test-image');
         test.innerHTML = 'image upload error: ' + JSON.stringify(err);

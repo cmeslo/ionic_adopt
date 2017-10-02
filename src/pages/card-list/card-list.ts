@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 // import { HTTP } from '@ionic-native/http';
-import { Http } from '@angular/http';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ViewController, PopoverController } from 'ionic-angular';
 
@@ -16,24 +16,24 @@ import { global } from '../global'
 	templateUrl: 'card-list.html'
 })
 export class CardListPage {
-	allItems: Array<{img: string, title: string, date: string, note: string}>;
-	items: Array<{img: string, title: string, date: string, note: string}>;
-	// items: Array<{
-	// 	id: number,
-	// 	title: string,
-	// 	desc: string,
-	// 	age: string,
-	// 	gender: string,
-	// 	contactNumber: string,
-	// 	otherContact: string,
-	// 	status: string,
-	// 	operatTime: string,
-	// 	loveSet: Array<{id: number, title: string}>,
-	// 	commentList: Array<{id: number, contenct: string, userId: string}>,
-	// 	dislike: number,
-	// 	operator: string,
-	// 	image: string
-	// }>;
+	// allItems: Array<{img: string, title: string, date: string, note: string}>;
+	// items: Array<{img: string, title: string, date: string, note: string}>;
+	items: Array<{
+		id: number,
+		title: string,
+		desc: string,
+		age: string,
+		gender: string,
+		contactNumber: string,
+		otherContact: string,
+		status: string,
+		operatTime: string,
+		loveSet: Array<{id: number, title: string}>,
+		commentList: Array<{id: number, contenct: string, userId: string}>,
+		dislike: number,
+		operator: string,
+		image: string
+	}>;
 	// allItems: Array<{
 	// 	id: number,
 	// 	title: string,
@@ -52,14 +52,14 @@ export class CardListPage {
 	// }>;
 
 	// myInput: string;
-	petType: string;
+	category: string;
 
 	constructor(public http: Http, public navCtrl: NavController, public popoverCtrl: PopoverController) {
-		this.allItems = [];
+		// this.allItems = [];
 		this.items = [];
 		this.initializeItems();
 		// this.myInput = '';
-		this.petType = '';
+		this.category = 'ALL';
 
 		// for (let i = 0; i < 2; ++i) {
 		// 	this.items.push({
@@ -73,26 +73,27 @@ export class CardListPage {
 
 	initializeItems() {
 		// this.http.get('http://127.0.0.1:8080/infoCard').map(res => res.json())
-		this.http.get('http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/0').map(res => res.json())
-		.subscribe(data => {
-			for (var i = 0; i < data.length; ++i) {
+		// this.http.get('http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/0').map(res => res.json())
+		// .subscribe(data => {
+		// 	for (var i = 0; i < data.length; ++i) {
 
-				let loveSet = data[i]['loveSet'];
-						data[i]['btnColor'] = 'primary';
-						// let userId = window.localStorage.getItem('userId');
-						let userId = 1;
+		// 		let loveSet = data[i]['loveSet'];
+		// 		data[i]['btnColor'] = 'primary';
+		// 		// let userId = window.localStorage.getItem('userId');
+		// 		let userId = 1;
 
-					for (let c of loveSet) {
-						if (c['id'] == userId) data[i]['btnColor'] = 'secondary';
-						}
+		// 		for (let c of loveSet) {
+		// 			if (c['id'] == userId) data[i]['btnColor'] = 'secondary';
+		// 		}
 
-				this.allItems.push(data[i]);
-				this.items.push(data[i]);
-			}
-			//this.allItems = this.items;
-		}, error => {
-			console.log(error);
-		});
+		// 		this.allItems.push(data[i]);
+		// 		this.items.push(data[i]);
+		// 	}
+		// 	//this.allItems = this.items;
+		// }, error => {
+		// 	console.log(error);
+		// });
+		this.getAdopts(0);
 	}
 
 	cardTapped(event, item) {
@@ -103,24 +104,22 @@ export class CardListPage {
 
 	doInfinite(infiniteScroll) {
 
-		this.resumeAllItems();
+		console.log("currentPage: " + global.currentPage);
 
-		console.log("currentId: " + global.currentId);
-		global.currentId++;
-
-		// console.log('Begin async operation');
+		console.log('Begin async operation');
 
 		setTimeout(() => {
-				// this.http.get('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json())
-			this.http.get('http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/' + global.currentId).map(res => res.json())
-			.subscribe(data => {
-				for (var i = 0; i < data.length; ++i) {
-					this.allItems.push(data[i]);
-					this.items.push(data[i]);
-				}
-			}, error => {
-				console.log(error);
-			});
+			// this.http.get('http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/' + global.currentPage).map(res => res.json())
+			// .subscribe(data => {
+			// 	for (var i = 0; i < data.length; ++i) {
+			// 		// this.allItems.push(data[i]);
+			// 		this.items.push(data[i]);
+			// 	}
+			// 	global.currentPage++;
+			// }, error => {
+			// 	console.log(error);
+			// });
+			this.getAdopts(global.currentPage, this.category);
 
 			// this.items.push({
 			// 	img: 'assets/img/dog_01.jpg',
@@ -136,40 +135,55 @@ export class CardListPage {
 		}, 500);
 	}
 
-	onFilter(ev: any) {
-		let val = ev.target.value;
-		console.log('val: ' + val);
+	// onFilter(ev: any) {
+	// 	let val = ev.target.value;
+	// 	console.log('val: ' + val);
 
-		console.log('allItems: ' + this.allItems.length);
-		console.log('items: ' + this.items.length);
+	// 	console.log('allItems: ' + this.allItems.length);
+	// 	console.log('items: ' + this.items.length);
 
-		if (val && val.trim() != '') {
-			// this.items = this.items.filter((item) => {
-			// 	return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
-			// });
-			this.items = this.allItems.filter((item) => {
-				console.log('find: ' + item.title.toLowerCase().indexOf(val.toLowerCase()));
-				return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
-			});
-		}
-		console.log('allItems: ' + this.allItems.length);
-		console.log('items: ' + this.items.length);
+	// 	if (val && val.trim() != '') {
+	// 		// this.items = this.items.filter((item) => {
+	// 		// 	return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
+	// 		// });
+	// 		this.items = this.allItems.filter((item) => {
+	// 			console.log('find: ' + item.title.toLowerCase().indexOf(val.toLowerCase()));
+	// 			return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
+	// 		});
+	// 	}
+	// 	console.log('allItems: ' + this.allItems.length);
+	// 	console.log('items: ' + this.items.length);
 
-		if (val && !val.length) {
-			this.resumeAllItems();
-		}
-	}
-
-	onClear(ev: any) {
-		this.resumeAllItems();
-	}
-
-	resumeAllItems() {
-		this.items = this.allItems.slice();
-	}
+	// 	if (val && !val.length) {
+	// 		this.resumeAllItems();
+	// 	}
+	// }
 
 	clickLike(event, item) {
+
+		if (item['btnColor'] == 'secondary') return;
+
+		let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/like';
+
+		let headers = new Headers();
+		headers.append('Accept', 'application/json');
+		headers.append('Content-Type', 'application/json');
+
+		let options = new RequestOptions({ headers: headers });
+
+		let body = {
+			userid: "001",
+			adopt: item.id
+		}
+
+		this.http.post(url, body, options)
+		.subscribe(data => {
+			console.log('success: ' + data);
+		}, error => {
+			console.log('error: ' + error);
+		});
 		item['btnColor'] = 'secondary';
+		item['loves']++;
 	}
 
 	postAdopt() {
@@ -177,13 +191,47 @@ export class CardListPage {
 	}
 
 	presentPopover(myEvent) {
-		let popover = this.popoverCtrl.create(PopoverPage);
+		let popover = this.popoverCtrl.create(PopoverPage, {category: this.category});
 		popover.present({
 			ev: myEvent
 		});
 		popover.onDidDismiss((popoverData) => {
-			this.petType = popoverData;
-			console.log(this.petType);
+			if (popoverData === null) return;
+			console.log(popoverData);
+			this.category = popoverData;
+			global.currentPage = 0;
+			this.items = [];
+			this.getAdopts(global.currentPage, this.category);
+		});
+	}
+
+	getAdopts(index, category = 'ALL') {
+
+		let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/' + index;
+
+		if (category !== 'ALL') {
+			url = url + '/type/' + category;
+		}
+
+		this.http.get(url).map(res => res.json())
+		.subscribe(data => {
+			for (let i = 0; i < data.length; ++i) {
+
+				let loveSet = data[i]['loveSet'];
+				data[i]['btnColor'] = 'primary';
+				// let userId = window.localStorage.getItem('userId');
+				let userId = '001';
+				for (let c of loveSet) {
+					if (c['userId'] == userId) data[i]['btnColor'] = 'secondary';
+				}
+
+				data[i]['loves'] = data[i]['loveSet'].length;
+
+				this.items.push(data[i]);
+			}
+			global.currentPage = index + 1;
+		}, error => {
+			console.log(error);
 		});
 	}
 
