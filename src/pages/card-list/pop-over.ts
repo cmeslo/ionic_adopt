@@ -1,31 +1,55 @@
 import { Component } from '@angular/core';
-import { ViewController, PopoverController } from 'ionic-angular';
+import { ViewController, PopoverController, NavParams } from 'ionic-angular';
 
 @Component({
   template: `
-    <ion-list>
+    <ion-list radio-group [(ngModel)]="category" (ionChange)="changeCategory()">
       <ion-list-header color="primary">類型</ion-list-header>
-      <ion-item *ngFor="let item of popoverItemList" (click)="setSelectedTitle(item.name)">
-        {{item.name}}
+      <ion-item>
+        <ion-label>全部</ion-label>
+        <ion-radio value="ALL"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>狗</ion-label>
+        <ion-radio value="DOG"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>貓</ion-label>
+        <ion-radio value="CAT"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>其他</ion-label>
+        <ion-radio value="OTHER"></ion-radio>
       </ion-item>
     </ion-list>
   `
 })
 export class PopoverPage {
 
-  popoverItemList = [{name: '全部'}, {name: '狗'}, {name: '貓'}, {name: '其他'}];
-  selectedTitle: string;
+  category;
+  isParamInited: boolean;
 
-  constructor(public viewCtrl: ViewController) {
-    this.selectedTitle = '';
+  constructor(public viewCtrl: ViewController, private navParams: NavParams) {
   }
 
-  setSelectedTitle(selectedItem) {
-    this.selectedTitle = selectedItem;
-    this.viewCtrl.dismiss(this.selectedTitle);
+  ngOnInit() {
+    this.setCategory();
   }
 
-  // close() {
-  //   this.viewCtrl.dismiss();
-  // }
+  setCategory() {
+    this.isParamInited = false;
+    if (this.navParams.data) {
+      this.category = this.navParams.data.category;
+    } else {
+      this.category = 'ALL';
+    }
+  }
+
+  changeCategory() {
+    if (!this.isParamInited) {
+      this.isParamInited = true;
+      return;
+    }
+    if (this.category) this.viewCtrl.dismiss(this.category);
+  }
 }
