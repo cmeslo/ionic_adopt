@@ -1,5 +1,5 @@
 import { AfterViewInit, ViewChild, Component, ElementRef } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Content, ToastController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -20,7 +20,7 @@ export class PetFormPage implements AfterViewInit {
 
   private imagePreview: any;
 
-  constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer) {
+  constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer, private toastCtrl: ToastController) {
     this.petInfo = this.formBuilder.group({
       title: ['', Validators.required],
       category: ['', Validators.required],
@@ -36,10 +36,16 @@ export class PetFormPage implements AfterViewInit {
     console.log(this.content);
     //this.content.className = 'no-scroll';
     this.imagePreview = document.getElementById('imagePreview');
+    this.base64Image = null;
   }
 
   petForm() {
     //console.log(this.petInfo.value);
+    if (this.base64Image === null ) {
+      this.presentToast('請先上傳圖片', 'bottom');
+      return;
+    }
+
     this.postPetForm();
   }
 
@@ -92,12 +98,13 @@ export class PetFormPage implements AfterViewInit {
             let imageName = data;
             this.uploadImage(imageName);
           } else {
-            alert('post successfully, but image is null');
+            this.presentToast('post successfully, but image is null', 'bottom');
           }
         }, error => {
           let test = document.getElementById('test-post');
           test.innerHTML = 'error: ' + error + '/n' + body;
           console.log('error: ' + error);
+          this.presentToast('上傳失敗, 請稍後再試', 'bottom'); 
         });
   }
 
@@ -190,6 +197,19 @@ export class PetFormPage implements AfterViewInit {
     ta.style.height = ta.scrollHeight + "px";
   }
 
+  presentToast(message, position) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: position
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
 }
 
 
