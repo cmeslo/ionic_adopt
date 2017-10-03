@@ -24,16 +24,26 @@
     <ion-textarea #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="desc" formControlName="description"></ion-textarea>
   </ion-item>
   <ion-item>
+    <ion-label color="primary" floating>類別</ion-label>
+    <!-- <ion-select interface="popover" formControlName="category"> -->
+      <ion-select formControlName="category">
+      <ion-option value="DOG">狗</ion-option>
+      <ion-option value="CAT">貓</ion-option>
+      <ion-option value="OTHER">其他</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
     <ion-label color="primary" floating>性別</ion-label>
     <!-- <ion-select [(ngModel)]="gender"> -->
-    <ion-select interface="popover" formControlName="gender">
+    <!-- <ion-select interface="popover" formControlName="gender"> -->
+      <ion-select formControlName="gender">
       <ion-option value="FEMALE">Female</ion-option>
       <ion-option value="MALE">Male</ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label color="primary" floating>歲數</ion-label>
-    <ion-input type="number" formControlName="age"></ion-input>
+    <ion-input type="number" pattern="[0-9]*" formControlName="age"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label color="primary" floating>聯絡電話</ion-label>

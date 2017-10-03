@@ -23,6 +23,7 @@ export class PetFormPage implements AfterViewInit {
   constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer) {
     this.petInfo = this.formBuilder.group({
       title: ['', Validators.required],
+      category: ['', Validators.required],
       gender: [''],
       age: [''],
       contactNum: ['', Validators.required],
@@ -52,6 +53,7 @@ export class PetFormPage implements AfterViewInit {
       title: this.petInfo.value.title,
       desc: this.petInfo.value.description,
       age: this.petInfo.value.age,
+      type: this.petInfo.value.category,
       gender: this.petInfo.value.gender,
       contactNumber: this.petInfo.value.contactNum,
       otherContact: this.petInfo.value.otherContact,
@@ -107,7 +109,9 @@ export class PetFormPage implements AfterViewInit {
       correctOrientation: true,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 800,
+      targetHeight: 800
     };
 
   	this.camera.getPicture(options).then((imageData) => {
@@ -130,6 +134,8 @@ export class PetFormPage implements AfterViewInit {
       encodingType: this.camera.EncodingType.JPEG,
       sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
       mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 800,
+      targetHeight: 800
     };
     this.camera.getPicture(options).then((imageData) => {
       // imageData is a base64 encoded string
