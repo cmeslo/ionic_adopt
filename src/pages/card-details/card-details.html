@@ -9,31 +9,39 @@
 
 <ion-content>
   <img src="{{item.image}}"/>
-  <p>{{item.title}}</p>
-  <ion-icon name="ios-clock-outline"></ion-icon> {{item.operatTime}}
-  <p>描述: {{item.desc}}</p>
-  <p>性別: {{item.gender}}</p>
-  <p>年齡: {{item.age}}</p>
-  <p>聯絡電話: {{item.contactNumber}}</p>
 
-  <p>評論:</p>
-  <ion-list>
-    <ion-item *ngFor="let comment of item.commentList">
-      <ion-icon item-start name="contact" *ngIf="!comment.avatar"></ion-icon>
-      <ion-avatar item-start *ngIf="comment.avatar">
-        <img src="{{comment.avatar}}">
-      </ion-avatar>
-      <h2>
-        {{comment.content}}
-      </h2>
-      <p *ngIf="!comment.avatar">
-        註冊用戶 ({{comment.userId}})
-      </p>
-      <p *ngIf="comment.avatar">
-        Facebook用戶
-      </p>
-    </ion-item>
-  </ion-list>
+  <ion-item>
+    {{item.title}}<br/>
+    <p><ion-icon name="ios-clock-outline"></ion-icon> {{item.operatTime}} </p>
+  </ion-item>
+  
+  <ion-item><p>描述: {{item.desc}}</p></ion-item>
+  <ion-item><p>性別: {{item.gender}}</p></ion-item>
+  <ion-item><p>年齡: {{item.age}}</p></ion-item>
+  <ion-item><p>聯絡電話: {{item.contactNumber}}</p></ion-item>
+
+  <ion-item>
+    <p>評論:</p>
+    <ion-list>
+      <ion-item *ngFor="let comment of item.commentList">
+        <ion-avatar item-start *ngIf="!comment.avatar">
+          <ion-icon item-start name="contact"></ion-icon>
+        </ion-avatar>
+        <ion-avatar item-start *ngIf="comment.avatar">
+          <img src="{{comment.avatar}}">
+        </ion-avatar>
+        <h2>
+          {{comment.content}}
+        </h2>
+        <small *ngIf="!comment.avatar">
+          註冊用戶 ({{comment.userId}})
+        </small>
+        <small *ngIf="comment.avatar">
+          Facebook用戶
+        </small>
+      </ion-item>
+    </ion-list>
+  </ion-item> 
 </ion-content>
 
 <ion-footer>
