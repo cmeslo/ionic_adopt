@@ -39,7 +39,7 @@ export class CardDetailsPage {
 		let options = new RequestOptions({ headers: headers });
 
 		let body = {
-			userid: "001",
+			userid: "1306532112799708",
 			adopt: this.item.id,
 			content: this.commentText.value
 		}
