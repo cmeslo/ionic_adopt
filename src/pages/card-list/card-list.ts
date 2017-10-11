@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 // import { HTTP } from '@ionic-native/http';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -54,7 +54,7 @@ export class CardListPage {
 	// myInput: string;
 	category: string;
 
-	constructor(public http: Http, public navCtrl: NavController, public popoverCtrl: PopoverController) {
+	constructor(public http: Http, public navCtrl: NavController, public popoverCtrl: PopoverController, private toastCtrl: ToastController) {
 		// this.allItems = [];
 		this.items = [];
 		this.initializeItems();
@@ -108,6 +108,8 @@ export class CardListPage {
 
 		console.log('Begin async operation');
 
+		let beforePage = global.currentPage;
+
 		setTimeout(() => {
 			// this.http.get('http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/' + global.currentPage).map(res => res.json())
 			// .subscribe(data => {
@@ -121,6 +123,12 @@ export class CardListPage {
 			// });
 			this.getAdopts(global.currentPage, this.category);
 
+			if (beforePage === global.currentPage) { // nothing to load
+				infiniteScroll.enable(false);
+				setTimeout(() => {
+					infiniteScroll.enable(true);
+				}, 10000);
+			}
 			// this.items.push({
 			// 	img: 'assets/img/dog_01.jpg',
 			// 	title: 'Husky',
@@ -215,6 +223,12 @@ export class CardListPage {
 
 		this.http.get(url).map(res => res.json())
 		.subscribe(data => {
+
+			if (data.length === 0 && index !== 0) {
+				this.presentToast('已經到底了, 請稍後再嘗試!', 'bottom');
+				return;
+			}
+
 			for (let i = 0; i < data.length; ++i) {
 
 				let loveSet = data[i]['loveSet'];
@@ -239,9 +253,9 @@ export class CardListPage {
 
 	timeSince(date) {
 
-		var seconds = Math.floor((new Date().valueOf() - date.valueOf()) / 1000);
+		let seconds = Math.floor((new Date().valueOf() - date.valueOf()) / 1000);
 
-		var interval = Math.floor(seconds / 31536000);
+		let interval = Math.floor(seconds / 31536000);
 
 		if (interval > 1) {
 			return interval + " years ago";
@@ -265,4 +279,17 @@ export class CardListPage {
 		return Math.floor(seconds) + " seconds ago";
 	}
 
+	presentToast(message, position) {
+		let toast = this.toastCtrl.create({
+			message: message,
+			duration: 2000,
+			position: position
+		});
+
+		toast.onDidDismiss(() => {
+			console.log('Dismissed toast');
+		});
+
+		toast.present();
+	}
 }

@@ -41,10 +41,10 @@ export class PetFormPage implements AfterViewInit {
 
   petForm() {
     //console.log(this.petInfo.value);
-    if (this.base64Image === null ) {
-      this.presentToast('請先上傳圖片', 'bottom');
-      return;
-    }
+    // if (this.base64Image === null ) {
+    //   this.presentToast('請先上傳圖片', 'bottom');
+    //   return;
+    // }
 
     this.postPetForm();
   }
@@ -59,7 +59,7 @@ export class PetFormPage implements AfterViewInit {
       title: this.petInfo.value.title,
       desc: this.petInfo.value.description,
       age: this.petInfo.value.age,
-      type: this.petInfo.value.category,
+      adoptType: this.petInfo.value.category,
       gender: this.petInfo.value.gender,
       contactNumber: this.petInfo.value.contactNum,
       otherContact: this.petInfo.value.otherContact,
@@ -83,7 +83,8 @@ export class PetFormPage implements AfterViewInit {
     }
     console.log('body: ' + JSON.stringify(body));
 
-    let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/addForm';
+    // let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/addForm';
+    let url = 'https://adoptmacao.ddns.net/Adopt/sayhello/addForm';
 
     let options = new RequestOptions({ headers: headers });
 
@@ -100,6 +101,8 @@ export class PetFormPage implements AfterViewInit {
           } else {
             this.presentToast('post successfully, but image is null', 'bottom');
           }
+          this.petInfo.reset();
+          this.base64Image = null;
         }, error => {
           let test = document.getElementById('test-post');
           test.innerHTML = 'error: ' + error + '/n' + body;
@@ -176,7 +179,8 @@ export class PetFormPage implements AfterViewInit {
         //headers: {Connection: "close"},
         params:{operatiune:'uploadpoza'}
       };
-    let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/fileupload';
+    // let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/fileupload';
+    let url = 'https://adoptmacao.ddns.net/Adopt/sayhello/fileupload';
 
     fileTransfer.upload(this.base64Image, encodeURI(url), options)
       .then((data) => {
