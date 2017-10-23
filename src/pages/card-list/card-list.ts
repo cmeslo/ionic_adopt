@@ -171,7 +171,7 @@ export class CardListPage {
 
 		if (item['btnColor'] == 'secondary') return;
 
-		let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/like';
+		let url = 'https://adoptmacao.ddns.net/Adopt/sayhello/like';
 
 		let headers = new Headers();
 		headers.append('Accept', 'application/json');
@@ -180,7 +180,8 @@ export class CardListPage {
 		let options = new RequestOptions({ headers: headers });
 
 		let body = {
-			userid: "001",
+			// userid: "001",
+      userid: window.localStorage.getItem('userid'),
 			adopt: item.id
 		}
 
@@ -215,7 +216,7 @@ export class CardListPage {
 
 	getAdopts(index, category = 'ALL') {
 
-		let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/getAdopt/' + index;
+		let url = 'https://adoptmacao.ddns.net/Adopt/sayhello/getAdopt/' + index;
 
 		if (category !== 'ALL') {
 			url = url + '/type/' + category;
@@ -233,8 +234,8 @@ export class CardListPage {
 
 				let loveSet = data[i]['loveSet'];
 				data[i]['btnColor'] = 'primary';
-				// let userId = window.localStorage.getItem('userId');
-				let userId = '001';
+				let userId = window.localStorage.getItem('userid');
+				// let userId = '001';
 				for (let c of loveSet) {
 					if (c['userId'] == userId) data[i]['btnColor'] = 'secondary';
 				}
@@ -254,6 +255,7 @@ export class CardListPage {
 	timeSince(date) {
 
 		let seconds = Math.floor((new Date().valueOf() - date.valueOf()) / 1000);
+		if (seconds < 0) return "a few minutes ago";
 
 		let interval = Math.floor(seconds / 31536000);
 
@@ -276,7 +278,7 @@ export class CardListPage {
 		if (interval > 1) {
 			return interval + " minutes ago";
 		}
-		return Math.floor(seconds) + " seconds ago";
+		return "a few minutes ago";
 	}
 
 	presentToast(message, position) {
@@ -292,4 +294,14 @@ export class CardListPage {
 
 		toast.present();
 	}
+
+  ionViewDidEnter() {
+	  if (global.addFormed === true) {
+      global.currentPage = 0;
+      alert(global.addFormed);
+      this.items = [];
+      this.getAdopts(global.currentPage);
+      global.addFormed = false;
+    }
+  }
 }

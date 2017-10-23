@@ -11,51 +11,54 @@
 
 <!-- <ion-img id="camera-image" [width]="imgWidth" [height]="imgHeight"></ion-img> -->
 <img id="imagePreview" />
-<p id="test-post"></p>
-<p id="test-image"></p>
+<!--<p id="test-post"></p>-->
+<!--<p id="test-image"></p>-->
 
 <form [formGroup]="petInfo" (ngSubmit)="petForm()">
   <ion-item>
-    <ion-label color="primary" floating>標題</ion-label>
+    <ion-label color="primary" floating>標題/Title</ion-label>
     <ion-input type="text" formControlName="title"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label color="primary" floating>描述</ion-label>
+    <ion-label color="primary" floating>描述/Description</ion-label>
     <ion-textarea #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="desc" formControlName="description"></ion-textarea>
   </ion-item>
   <ion-item>
-    <ion-label color="primary" floating>類別</ion-label>
+    <ion-label color="primary" floating>類別/Type</ion-label>
     <!-- <ion-select interface="popover" formControlName="category"> -->
       <ion-select formControlName="category">
-      <ion-option value="DOG">狗</ion-option>
-      <ion-option value="CAT">貓</ion-option>
-      <ion-option value="OTHER">其他</ion-option>
+      <ion-option value="DOG">狗/Dog</ion-option>
+      <ion-option value="CAT">貓/Cat</ion-option>
+      <ion-option value="OTHER">其他/Other</ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label color="primary" floating>性別</ion-label>
+    <ion-label color="primary" floating>性別/Gender</ion-label>
     <!-- <ion-select [(ngModel)]="gender"> -->
     <!-- <ion-select interface="popover" formControlName="gender"> -->
       <ion-select formControlName="gender">
-      <ion-option value="FEMALE">Female</ion-option>
-      <ion-option value="MALE">Male</ion-option>
+      <ion-option value="FEMALE">雌性/Female</ion-option>
+      <ion-option value="MALE">雄性/Male</ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label color="primary" floating>歲數</ion-label>
+    <ion-label color="primary" floating>歲數/Age</ion-label>
     <ion-input type="number" pattern="[0-9]*" formControlName="age"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label color="primary" floating>聯絡電話</ion-label>
+    <ion-label color="primary" floating>聯絡電話/Contact</ion-label>
     <ion-input type="number" formControlName="contactNum"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label color="primary" floating>其他聯絡方式</ion-label>
+    <ion-label color="primary" floating>其他聯絡方式/Other Contact</ion-label>
     <ion-input type="text" formControlName="otherContact"></ion-input>
   </ion-item>
-  
+  <ion-item>
+    <p><small style="white-space: pre-wrap;">*聯絡方式等資訊選擇性填寫，方便領養人聯繫，若用戶填寫，資訊將會被公開，請用戶謹慎填寫</small></p>
+  </ion-item>
+
   <div padding>
-    <button ion-button block type="submit" [disabled]="!petInfo.valid">提交</button>
+    <button ion-button block type="submit" color="secondary" [disabled]="!petInfo.valid">提交</button>
   </div>
 </form>
 

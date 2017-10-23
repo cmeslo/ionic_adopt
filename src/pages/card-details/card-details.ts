@@ -20,9 +20,20 @@ export class CardDetailsPage {
 		    comment['avatar'] = 'https://graph.facebook.com/' + comment.userId + '/picture';
       }
     }
+    if (this.item.operator === window.localStorage.getItem('userid')){
+    // if (this.item.operator === "test"){
+		  this.item.isOwner = true;
+    }
 	}
 
 	comment() {
+    let userId = window.localStorage.getItem('userid');
+
+    if (userId === null || userId === "undefined") {
+      this.presentToast("Please login");
+      return;
+    }
+
 		console.log(this.commentText);
 		// console.log(this.commentText.value);
 
@@ -35,24 +46,25 @@ export class CardDetailsPage {
 		headers.append('Accept', 'application/json');
 		headers.append('Content-Type', 'application/json');
 
-		let url = 'http://adoptmacao.ddns.net:8080/Adopt/sayhello/comment';
+		let url = 'https://adoptmacao.ddns.net/Adopt/sayhello/comment';
 		let options = new RequestOptions({ headers: headers });
 
 		let body = {
-			userid: "1306532112799708",
+			// userid: "1306532112799708",
+			userid: window.localStorage.getItem('userid'),
 			adopt: this.item.id,
 			content: this.commentText.value
 		}
 
-		let userId = '1306532112799708';
-    // let userId = window.localStorage.getItem('userid');
+		// let userId = '1306532112799708';
     let avatar = null;
     if (userId.length > 5) {
       avatar = 'https://graph.facebook.com/' + userId + '/picture';
     }
 
 		let commentInAdopt = {
-			userId: "1306532112799708",
+			// userId: "1306532112799708",
+      userId: userId,
       avatar: avatar,
 			content: this.commentText.value
 		}

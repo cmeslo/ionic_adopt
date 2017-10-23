@@ -1,10 +1,12 @@
 import { AfterViewInit, ViewChild, Component, ElementRef } from '@angular/core';
-import { Content, ToastController } from 'ionic-angular';
+import {Content, NavController, ToastController} from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
+
+import { global } from '../global'
 
 @Component({
   selector: 'page-pet-form',
@@ -20,7 +22,7 @@ export class PetFormPage implements AfterViewInit {
 
   private imagePreview: any;
 
-  constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer, private toastCtrl: ToastController) {
+  constructor(private camera: Camera, private formBuilder: FormBuilder, public http: Http, private transfer: Transfer, private toastCtrl: ToastController, public navCtrl: NavController) {
     this.petInfo = this.formBuilder.group({
       title: ['', Validators.required],
       category: ['', Validators.required],
@@ -46,6 +48,11 @@ export class PetFormPage implements AfterViewInit {
     //   return;
     // }
 
+    let userId = window.localStorage.getItem('userid');
+    if (userId === null || userId === "undefined") {
+      this.presentToast("Please login", "bottom");
+      return;
+    }
     this.postPetForm();
   }
 
@@ -66,7 +73,8 @@ export class PetFormPage implements AfterViewInit {
       // operatTime: this.getCurrentTime(),
 
       status: 'A',
-      operator: 'test'
+      // operator: 'test'
+      operator: window.localStorage.getItem('userid')
       // loveSet: null,
       // commentList: null,
       // dislike: 1,
@@ -92,9 +100,9 @@ export class PetFormPage implements AfterViewInit {
     // this.http.post('http://127.0.0.1:8080/postTest', body, {headers: headers})
       .map(res => res.json())
       .subscribe(data => {
-          let test = document.getElementById('test-post');
-          test.innerHTML = 'data: ' + data + '\n' + body;
-          console.log('data: ' + data);
+          // let test = document.getElementById('test-post');
+          // test.innerHTML = 'data: ' + data + '\n' + body;
+          // console.log('data: ' + data);
           if (this.base64Image != null) {
             let imageName = data;
             this.uploadImage(imageName);
@@ -103,11 +111,14 @@ export class PetFormPage implements AfterViewInit {
           }
           this.petInfo.reset();
           this.base64Image = null;
+          this.imagePreview.removeAttribute('src');
+          global.addFormed = true;
+          this.navCtrl.parent.select(0);
         }, error => {
-          let test = document.getElementById('test-post');
-          test.innerHTML = 'error: ' + error + '/n' + body;
+          // let test = document.getElementById('test-post');
+          // test.innerHTML = 'error: ' + error + '/n' + body;
           console.log('error: ' + error);
-          this.presentToast('上傳失敗, 請稍後再試', 'bottom'); 
+          this.presentToast('上傳失敗, 請稍後再試', 'bottom');
         });
   }
 
@@ -120,8 +131,8 @@ export class PetFormPage implements AfterViewInit {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: 800,
-      targetHeight: 800
+      targetWidth: 600,
+      targetHeight: 600
     };
 
   	this.camera.getPicture(options).then((imageData) => {
@@ -144,8 +155,8 @@ export class PetFormPage implements AfterViewInit {
       encodingType: this.camera.EncodingType.JPEG,
       sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
       mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: 800,
-      targetHeight: 800
+      targetWidth: 600,
+      targetHeight: 600
     };
     this.camera.getPicture(options).then((imageData) => {
       // imageData is a base64 encoded string
@@ -184,12 +195,12 @@ export class PetFormPage implements AfterViewInit {
 
     fileTransfer.upload(this.base64Image, encodeURI(url), options)
       .then((data) => {
-        let test = document.getElementById('test-image');
-        test.innerHTML = 'image upload success: ' + JSON.stringify(data);
-        alert("success 00");
+        // let test = document.getElementById('test-image');
+        // test.innerHTML = 'image upload success: ' + JSON.stringify(data);
+        alert("upload success");
       }, (err) => {
-        let test = document.getElementById('test-image');
-        test.innerHTML = 'image upload error: ' + JSON.stringify(err);
+        // let test = document.getElementById('test-image');
+        // test.innerHTML = 'image upload error: ' + JSON.stringify(err);
         alert("error");
       });
   }

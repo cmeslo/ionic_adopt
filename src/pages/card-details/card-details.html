@@ -14,7 +14,7 @@
     {{item.title}}<br/>
     <p><ion-icon name="ios-clock-outline"></ion-icon> {{item.operatTime}} </p>
   </ion-item>
-  
+
   <ion-item><p>描述: {{item.desc}}</p></ion-item>
   <ion-item><p>性別: {{item.gender}}</p></ion-item>
   <ion-item><p>年齡: {{item.age}}</p></ion-item>
@@ -41,7 +41,9 @@
         </small>
       </ion-item>
     </ion-list>
-  </ion-item> 
+  </ion-item>
+
+  <button ion-button color="danger" full *ngIf=item.isOwner>已完成領養</button>
 </ion-content>
 
 <ion-footer>
