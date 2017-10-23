@@ -29,8 +29,8 @@
 <ion-content>
   <ion-list>
     <ion-card *ngFor="let item of items">
-      <img src="{{item.image}}" (click)="cardTapped($event, item)"/>
-      <ion-card-content (click)="cardTapped($event, item)">
+      <img src="{{item.image}}" (click)="cardTapped($event, item)" tappable/>
+      <ion-card-content (click)="cardTapped($event, item)" tappable>
         <ion-card-title>
           {{item.title}}
         </ion-card-title>
