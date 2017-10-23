@@ -169,6 +169,12 @@ export class CardListPage {
 
 	clickLike(event, item) {
 
+		let userId = window.localStorage.getItem('userid');
+		if (userId === null || userId === "undefined") {
+			this.presentToast("Please login", "bottom");
+			return;
+		}
+
 		if (item['btnColor'] == 'secondary') return;
 
 		let url = 'https://adoptmacao.ddns.net/Adopt/sayhello/like';
