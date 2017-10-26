@@ -112,7 +112,7 @@ export class PetFormPage implements AfterViewInit {
           this.petInfo.reset();
           this.base64Image = null;
           this.imagePreview.removeAttribute('src');
-          global.addFormed = true;
+          global.refresh = true;
           this.navCtrl.parent.select(0);
         }, error => {
           // let test = document.getElementById('test-post');

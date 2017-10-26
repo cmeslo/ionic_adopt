@@ -302,12 +302,12 @@ export class CardListPage {
 	}
 
   ionViewDidEnter() {
-	  if (global.addFormed === true) {
+	  if (global.refresh === true) {
       global.currentPage = 0;
-      alert(global.addFormed);
+      // alert(global.refresh);
       this.items = [];
       this.getAdopts(global.currentPage);
-      global.addFormed = false;
+      global.refresh = false;
     }
   }
 }
