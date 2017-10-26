@@ -1,10 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <button menuToggle *ngIf="!item">
+<!--     <button menuToggle *ngIf="!item">
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>Card Details</ion-title>
+    <ion-buttons right ion-button clear icon-only (click)="dislike()">
+      <!-- <ion-icon class="icon" name="thumbs-down"></ion-icon> -->
+      <a>檢舉</a>
+    </ion-buttons>
   </ion-navbar>
+
 </ion-header>
 
 <ion-content>
@@ -44,7 +49,7 @@
     </ion-list>
   </ion-item>
 
-  <button ion-button color="danger" full *ngIf=item.isOwner>已完成領養</button>
+  <button ion-button color="danger" full *ngIf=item.isOwner (click)="adoptFinish()">已完成領養</button>
 </ion-content>
 
 <ion-footer>
