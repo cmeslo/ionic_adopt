@@ -114,11 +114,11 @@ export class CardDetailsPage {
 
       this.http.post(url, body, options)
       .subscribe(data => {
-        console.log('success: ' + data);
+        // console.log('success: ' + data);
         global.refresh = true;
         this.navCtrl.pop();
       }, error => {
-        console.log('error: ' + error);
+        // console.log('error: ' + error);
         this.presentToast("操作失敗, 請稍後再試");
       });
     });
@@ -126,8 +126,8 @@ export class CardDetailsPage {
 
   dislike() {
     if (this.checkLogin() === false) return;
-    let title   = '確認檢舉?';
-    let message = '被檢舉達一定數量, 相關內容將不會再顯示';
+    let title   = '檢舉';
+    let message = '檢舉內容將會被審核, 是否發送';
 
     this.doConfirm(title, message, () => {
       let headers = new Headers();
@@ -143,11 +143,11 @@ export class CardDetailsPage {
 
       this.http.post(url, body, options)
       .subscribe(data => {
-        console.log('success: ' + data);
+        // console.log('success: ' + data);
         global.refresh = true;
         this.navCtrl.pop();
       }, error => {
-        console.log('error: ' + error);
+        // console.log('error: ' + error);
         this.presentToast("操作失敗, 請稍後再試");
       });
     });
@@ -161,13 +161,13 @@ export class CardDetailsPage {
         {
           text: '取消',
           handler: () => {
-            console.log('Disagree clicked');
+            // console.log('Disagree clicked');
           }
         },
         {
           text: '確認',
           handler: () => {
-            console.log('Agree clicked');
+            // console.log('Agree clicked');
             agreeCallback();
           }
         }
